@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merdeka Bersuara</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* SEMUA STYLING NAVBAR DIGABUNG */
+        .custom-nav {
+            height: 150px;
+            background: url('./Img/Nav Bar Background.png') center/cover no-repeat;
+            padding: 0 40px;
+            font-family: 'Fredoka One', cursive;
+        }
+        /* FIX — Semua teks dropdown putih */
+        .dropdown-menu .dropdown-item {
+            color: white !important;
+        }
+
+        /* FIX — Hanya item yang di-hover jadi hitam */
+        .dropdown-menu .dropdown-item:hover {
+
+            background-color: white !important;
+            color: black !important;
+        }
+
+    </style>
+</head>
+<body style="background: url('./Img/Background Merdeka Bersuara.png') center/cover no-repeat;"href="index.html"></body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg custom-nav">
+  <div class="container-fluid d-flex align-items-center">
+
+    <h1 class="navbar-brand d-flex align-items-center" href="index.html">
+      <img href="index.html" style="height: 120px; width: auto;"src="./Img/Merdeka Bersuara Putih.png" alt="img" class="nav-logo">
+    </h1>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav ms-4 d-flex align-items-left">
+        <li class="nav-item">
+          <p style="padding-right: 40px; font-size: 22px; align-items: left;" class="nav-link active text-white" href="index.html">Home</p>
+        </li>
+
+        <li class="nav-item dropdown">
+          <p style="font-size: 22px; display:flex; align-items: center;" class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown">
+            Isu Hukum dan Media
+          </p>
+          <ul style="background-color: #2c2c2c !important;" class="dropdown-menu">
+            <li><a style="text-light"class="dropdown-item text-light" href="./Artikel PKN.html#Art1P">Pelanggaran terhadap Kebebasan Pers</a></li>
+            <li><a style="text-light"class="dropdown-item text-light" href="./Artikel PKN.html#Art2P">Penyalahgunaan Media & Informasi</a></li>
+            <li><a style="text-light"class="dropdown-item text-light" href="./Artikel PKN.html#Art3P">Perlindungan Individu & Privasi</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <p style="font-size: 22px; display:flex; align-items: center;" class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown">
+          Perkembangan Pers</p>
+          <ul style="background-color: #2c2c2c !important;" class="dropdown-menu" class="dropdown-menu">
+            <li><a class="dropdown-item" href="Artikel Sejarah.html#1S">Era Orde Baru</a></li>
+            <li><a class="dropdown-item" href="Artikel Sejarah.html#2S">Era Reformasi</a></li>
+            <li><a class="dropdown-item" href="Artikel Sejarah.html#3S">Era Sekarang</a></li>
+          </ul>
+                  <li class="nav-item dropdown">
+          <p style="font-size: 22px; display:flex; align-items: center;" class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown">
+            Sikap Masyarakat
+          </p>
+          <ul style="background-color: #2c2c2c !important;" class="dropdown-menu" class="dropdown-menu">
+            <li><a class="dropdown-item" href="./Artikel Agama.html#1A">Kesadaran Warga & Tanggung Jawab Sosial</a></li>
+            <li><a class="dropdown-item" href="./Artikel Agama.html#2A">Kewaspadaan terhadap Pengaruh Ideologi & Media</a></li>
+            <li><a class="dropdown-item" href="./Artikel Agama.html#3A">Penghormatan terhadap Hak & Kebebasan</a></li>
+          </ul>
+        </li>
+      </ul>
+
+<form class="d-flex ms-auto" role="search" onsubmit="return findInPage(event)">
+    <input id="searchInput" class="form-control me-2" type="smnearch" placeholder="Find in Page">
+    <button class="btn btn-outline-light" type="submit">Enter
+    </button>
+</form>
+
+<script>
+function clearHighlights() {
+    const marks = document.querySelectorAll("mark.find-highlight");
+    marks.forEach(m => {
+        const parent = m.parentNode;
+        parent.replaceChild(document.createTextNode(m.textContent), m);
+        parent.normalize();
+    });
+}
+
+function findInPage(e) {
+    e.preventDefault();
+
+    clearHighlights(); // Bersihkan highlight lama
+
+    let keyword = document.getElementById("searchInput").value.trim();
+    if (!keyword) return;
+
+    let body = document.body;
+
+    let regex = new RegExp(keyword, "gi");
+
+    let walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null, false);
+
+    let firstMatch = null;
+
+    while (walker.nextNode()) {
+        let node = walker.currentNode;
+        if (regex.test(node.nodeValue)) {
+
+            let span = document.createElement("span");
+            span.innerHTML = node.nodeValue.replace(regex, match => {
+                return `<mark class="find-highlight">${match}</mark>`;
+            });
+
+            node.parentNode.replaceChild(span, node);
+
+            if (!firstMatch) firstMatch = span.querySelector("mark");
+        }
+    }
+
+    if (firstMatch) {
+        firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+}
+</script>
+
+    </div>
+  </div>
+</nav>
+<body>
+    <style>
+.article-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 30px;
+}
+
+/* Kolom kiri (ikon share) */
+.share-column {
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.share-column img {
+    width: 40px;
+    cursor: pointer;
+}
+
+/* Kolom kanan (konten) */
+.content-column {
+    flex: 1;
+}
+
+.image-box img {
+    width: 68%;
+    height: auto;
+    display: block;
+}
+</style>
+
+
+<!-- LAYOUT BERITA -->
+<div class="article-container" style="display: flex; gap: 20px;">
+
+    <!-- Ikon Serviam -->
+    <div class="share-column" style="display: flex; flex-direction: column; gap: 10px;">
+        <img src="./Img/SERVIAM.png" alt="..." style="width: 60px;">
+    </div>
+
+    <!-- Container utama -->
+<div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
+
+    <!-- Konten dengan Card 3D -->
+    <div Id="1S" class="content-column" style="
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        padding: 30px;
+        max-width: 725px;
+        flex: 1;
+    ">
+        <h1 style="font-weight:700; font-size:40px; margin-bottom:10px; color:#ff0000; font-family: 'Fredoka One', sans-serif;">
+            Era Orde Baru
+        </h1>
+
+        <p style="color:#333; font-size:15px; margin-bottom:25px;">
+            Oleh <b>Kennan</b> &nbsp;&nbsp;&nbsp;
+            Dipublikasikan pada <b>28 November 2025</b> &nbsp;&nbsp;&nbsp;
+            Kategori: <b>Artikel</b> &nbsp;&nbsp;&nbsp;
+        </p>
+
+        <!-- Artikel PKN 2 -->
+        <div class="image-box" style="margin-bottom: 15px;">
+            <img src="./Img/1005568_720.jpg" alt="gambar" style="width: 100%; display: block; border-radius: 15px;">
+        </div>
+
+        <p><strong>Gambar 2.1</strong> - <span style="font-weight: lighter;">Karyawan media TEMPO ketika mengadukan kasus pembredelan ke DPR tahun 1994. Sepanjang 50 tahun Tempo, bukan baru sekali kena bredel akibat konsistensinya memperjuangkan kebebasan pers. 𝘚𝘶𝘮𝘣𝘦𝘳 : 𝘛𝘦𝘮𝘱𝘰.𝘤𝘰</span></p>
+
+        <div class="text-wrapper" style="padding-top: 20px;">
+            <p style="text-align: justify">Kebebasan pers di Indonesia pada masa Orde Baru sangat terbatas. Pemerintah saat itu mengontrol penuh isi pemberitaan. Media tidak bisa bebas menyampaikan kritik atau informasi yang dianggap merugikan pemerintah. Jika ada media yang menulis berita yang tidak sesuai dengan kepentingan penguasa, mereka bisa langsung mendapat teguran atau bahkan dibredel. </p>
+            <p style="text-align: justify">Beberapa media yang pernah dibredel yaitu majalah Tempo, Detik, dan Editor. Mereka dibredel pemerintah karena mereka menerbitkan berita yang berisi kritik atau dianggap mengancam stabilitas pemerintah. Pada masa itu, semua media harus memiliki Surat Izin Usaha Penerbitan Pers (SIUPP). Izin ini bisa dicabut kapan saja, sehingga banyak media akhirnya memilih diam dan hanya memberitakan hal yang aman. Jurnalis pun bekerja dalam tekanan dan sering mengalami sensor sebelum berita diterbitkan.</p>
+            <p style="text-align: justify">Dampak dari kondisi ini cukup besar. Masyarakat sulit mendapatkan informasi yang jujur dan berimbang. Banyak peristiwa penting yang tidak pernah diberitakan atau hanya disampaikan dari sudut pandang pemerintah saja. Pers kehilangan peran sebagai pengawas jalannya pemerintahan.</p>
+            <p style="text-align: justify">Baru setelah reformasi tahun 1998, kebebasan pers mulai benar-benar kembali. Media dapat lebih terbuka menyampaikan kritik dan masyarakat menjadi lebih mudah mengakses informasi. Namun dari pengalaman masa lalu itu, kita bisa belajar bahwa kebebasan pers harus selalu dijaga agar suara masyarakat tidak dibungkam lagi.</p>
+        </div>
+    </div>
+
+    <!-- Konten dengan Card 3D -->
+    <div Id="2S"
+    
+    
+    class="content-column" style="
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        padding: 30px;
+        max-width: 725px;
+        flex: 1;
+    ">
+        <h1 style="font-weight:700; font-size:40px; margin-bottom:10px; color:#ff0000; font-family: 'Fredoka One', sans-serif;">
+            Era Awal Reformasi
+        </h1>
+
+        <p style="color:#333; font-size:15px; margin-bottom:25px;">
+            Oleh <b>Kennan</b> &nbsp;&nbsp;&nbsp;
+            Dipublikasikan pada <b>28 November 2025</b> &nbsp;&nbsp;&nbsp;
+            Kategori: <b>Artikel</b> &nbsp;&nbsp;&nbsp;
+        </p>
+
+        <!-- Artikel PKN 1 -->
+        <div class="image-box" style="margin-bottom: 15px;">
+            <img src="./Img/Habibie bebaskan pers.jpg" alt="gambar" style="width: 100%; display: block; border-radius: 15px;">
+        </div>
+        <p><strong>Gambar 2.2</strong> - <span style="font-weight: lighter;">Presiden ke-3 Republik Indonesia, B.J. Habibie membebaskan tahanan politik orde baru dan kebebasan pers. 𝘚𝘶𝘮𝘣𝘦𝘳 : 𝘖𝘧𝘧𝘪𝘤𝘪𝘢𝘭 𝘪𝘕𝘦𝘸𝘴 </span></p>
+
+        <div class="text-wrapper" style="padding-top: 20px;">
+            <p style="text-align: justify">Setelah jatuhnya Orde Baru pada tahun 1998, Indonesia memasuki masa Reformasi. Pada era ini, kebebasan pers mengalami perkembangan yang sangat pesat. Pemerintah tidak lagi mengontrol media secara ketat seperti sebelumnya. Hal ini membuka ruang yang lebih luas bagi jurnalis untuk menyampaikan informasi dan kritik kepada publik. </p>
+            <p style="text-align: justify">Salah satu perubahan penting pada masa Reformasi adalah dihapusnya sistem SIUPP yang dulu digunakan sebagai alat pembatasan media. Tanpa ancaman pencabutan izin secara sepihak, media menjadi lebih berani mengangkat berbagai isu, termasuk yang berkaitan dengan pemerintahan. Kritik terhadap pejabat negara dan kebijakan pemerintah pun mulai muncul secara lebih terbuka di media massa. </p>
+            <p style="text-align: justify">Di era reformasi, teknologi informasi berkembang secara pesat, jadi masyarakat bisa mendapatkan berita dari berbagai sumber, tidak hanya dari media besar seperti koran atau televisi. Kondisi ini membuat media berusaha menyampaikan berita dengan lebih terbuka dan menarik bagi masyarakat.</p>
+            <p style="text-align: justify">Namun, kebebasan pers di era Reformasi juga membawa tantangan baru. Persaingan yang semakin bebas bisa membuat sebagian media mengutamakan sensasi daripada kebenaran informasi. Selain itu, penyebaran hoaks melalui internet menjadi masalah yang perlu diwaspadai dan perlu dihindari. Meski begitu, kebebasan pers tetap menjadi salah satu pencapaian penting Reformasi yang harus dijaga.</p>
+            <p style="text-align: justify">Secara keseluruhan, era Reformasi memberikan harapan baru bagi kehidupan pers di Indonesia. Media dapat kembali memainkan perannya. Selain itu, kebebasan pers ini harus terus dipertahankan agar pemerintahan di Indonesia tetap berkembang dengan baik dan suara masyarakat tetap terdengar.</p>
+        </div>
+    </div>
+        <!-- Konten dengan Card 3D -->
+    <div Id="3S" class="content-column" style="
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        padding: 30px;
+        max-width: 725px;
+        flex: 1;
+    ">
+        <h1 style="font-weight:700; font-size:40px; margin-bottom:10px; color:#ff0000; font-family: 'Fredoka One', sans-serif;">
+            Era Sekarang
+        </h1>
+
+        <p style="color:#333; font-size:15px; margin-bottom:25px;">
+            Oleh <b>Alicia</b> &nbsp;&nbsp;&nbsp;
+            Dipublikasikan pada <b>28 November 2025</b> &nbsp;&nbsp;&nbsp;
+            Kategori: <b>Artikel</b> &nbsp;&nbsp;&nbsp;
+        </p>
+
+        <!-- Artikel PKN 1 -->
+        <div class="image-box" style="margin-bottom: 15px;">
+            <img src="./Img/Screenshot 2025-11-28 185013.png" alt="gambar" style="width: 100%; display: block; border-radius: 15px;">
+        </div>
+        <p><strong>Gambar 2.3</strong> - <span style="font-weight: lighter;">Media dengan judul-judul clickbait yang menyebabkan keambiguan di tengah-tengah masyarakat. 𝘚𝘶𝘮𝘣𝘦𝘳 : 𝘝𝘦𝘳𝘦𝘥𝘪𝘵𝘶𝘮</span></p>
+
+        <div class="text-wrapper" style="padding-top: 20px;">
+            <p style="text-align: justify">Kebebasan pers merupakan bagian penting dari kehidupan masyarakat modern. Melalui pers, informasi dapat disebarkan secara bebas dan transparan. Namun, kebebasan ini bukan muncul begitu saja, melainkan hasil dari perkembangan panjang yang membuat pers hari ini lebih terbuka dibanding masa lalu. Di era sekarang, kebebasan pers membawa dampak besar bagi masyarakat, terutama dalam membentuk opini publik dan menjaga jalannya demokrasi.</p>
+            <p style="text-align: justify">Di zaman digital, kebebasan pers semakin luas karena banyak media baru bermunculan. Media cetak, televisi, dan terutama internet membuat masyarakat bisa mendapatkan informasi dengan cepat.</p>
+            <p style="text-align: justify">Beberapa ciri kebebasan pers masa kini yaitu dengan adanya media yang bebas mengkritik pemerintah dan juga pejabat publik, informasi tersedia dalam berbagai bentuk, serta adanya perlindungan hukum bagi wartawan.</p>
+            <p style="text-align: justify">Kebebasan pers membuat masyarakat lebih mudah tahu apa yang sebenarnya terjadi. Ini membantu warga: memahami isu-isu penting, ikut mengawasi pemerintah, menyuarakan pendapat, serta berpartisipasi dalam kehidupan demokratis. Namun, kebebasan ini juga menuntut masyarakat untuk bijak dalam menerima dan menyebarkan informasi.</p>
+            <p style="text-align: justify">Walaupun pers lebih bebas, tetap ada tantangan baru yang muncul seiring perkembangan teknologi. Tidak semua informasi berasal dari media kredibel; banyak konten palsu yang sengaja dibuat untuk mempengaruhi masyarakat. Selain itu, beberapa media bisa berpihak karena dibiayai kelompok tertentu, sehingga hal ini dapat memengaruhi objektivitas berita. Walaupun ada perlindungan hukum, wartawan masih bisa mengalami intimidasi, terutama saat membahas isu sensitif. Di sisi lain, persaingan media online yang sangat cepat membuat beberapa media demi menjadi yang pertama mengabaikan kualitas dan tidak melakukan pengecekan fakta secara mendalam.</p>
+            <p style="text-align: justify">Supaya kebebasan pers membawa dampak positif, masyarakat perlu bersikap kritis, memeriksa kebenaran berita, menghindari penyebaran hoaks, serta mendukung media yang jujur dan profesional. Dengan begitu, pers dapat menjalankan tugasnya dengan maksimal.</p>
+            <p style="text-align: justify">Kebebasan pers di era sekarang memberi banyak manfaat, terutama untuk menjaga keterbukaan dan transparansi dalam masyarakat. Meski begitu, kebebasan ini juga menghadapi berbagai tantangan, seperti hoaks dan tekanan dari kepentingan tertentu. Oleh karena itu, masyarakat harus lebih bijak dan kritis dalam menerima informasi. Jika pers yang bebas didukung oleh masyarakat yang cerdas, kehidupan demokrasi akan semakin kuat dan berkualitas.</p>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+<!-- Video Fixed di Kiri, Vertikal Tengah dengan Border Rounded -->
+<div style="width: 400px; height: auto; position: fixed; top: 50%; right: 40px; transform: translateY(-50%);">
+    <video width="100%" controls style="border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <source src="./Img/Video PKWU.mp4" type="video/mp4">
+    </video>
+</div>
+<a href="#top" target="_self" 
+   style="position: fixed; bottom: 40px; right: 40px; 
+          background-color: #ff0000; color: white; 
+          text-decoration: none; padding: 12px 20px; 
+          border-radius: 10px; cursor: pointer; 
+          box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+          font-size: 16px; display: block; z-index: 1000;">
+    ↑ Back to Top
+</a>
+</div>
+
+</div>
+</div>
+<!--        FOOTER             -->
+<footer style="
+    height:180px;
+    margin-top:80px;
+    background: url('./Img/Nav\ Bar\ Background.png') center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-family: 'Fredoka One', cursive;
+    text-align:center;
+">
+    <p style="font-size:20px; margin:0;">
+        © 2025 Merdeka Bersuara — Kelompok 4 X3 SMA Santa Theresia
+    </p>
+</footer>
+
+</body>
+</html>

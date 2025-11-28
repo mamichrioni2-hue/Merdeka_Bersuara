@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merdeka Bersuara</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* SEMUA STYLING NAVBAR DIGABUNG */
+        .custom-nav {
+            height: 150px;
+            background: url('./Img/Nav Bar Background.png') center/cover no-repeat;
+            padding: 0 40px;
+            font-family: 'Fredoka One', cursive;
+        }
+        /* FIX — Semua teks dropdown putih */
+        .dropdown-menu .dropdown-item {
+            color: white !important;
+        }
+
+        /* FIX — Hanya item yang di-hover jadi hitam */
+        .dropdown-menu .dropdown-item:hover {
+
+            background-color: white !important;
+            color: black !important;
+        }
+
+    </style>
+</head>
+<body style="background: url('./Img/Background Merdeka Bersuara.png') center/cover no-repeat;"href="index.html"></body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg custom-nav">
+  <div class="container-fluid d-flex align-items-center">
+
+    <h1 class="navbar-brand d-flex align-items-center" href="index.html">
+      <img href="./index.html" style="height: 120px; width: auto;"src="./Img/Merdeka Bersuara Putih.png" alt="img" class="nav-logo">
+    </h1>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav ms-4 d-flex align-items-left">
+        <li class="nav-item">
+          <a style="padding-right: 40px; font-size: 22px; align-items: left;" class="nav-link active text-white" href="./index.html">Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <p style="font-size: 22px; display:flex; align-items: center;" class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown">
+            Isu Hukum dan Media
+          </p>
+          <ul style="background-color: #2c2c2c !important;" class="dropdown-menu">
+            <li><a style="text-light"class="dropdown-item text-light" href="./Artikel PKN.html#Art1P">Pelanggaran terhadap Kebebasan Pers</a></li>
+            <li><a style="text-light"class="dropdown-item text-light" href="./Artikel PKN.html#Art2P">Penyalahgunaan Media & Informasi</a></li>
+            <li><a style="text-light"class="dropdown-item text-light" href="./Artikel PKN.html#Art3P">Perlindungan Individu & Privasi</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <p style="font-size: 22px; display:flex; align-items: center;" class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown">
+          Perkembangan Pers</p>
+          <ul style="background-color: #2c2c2c !important;" class="dropdown-menu" class="dropdown-menu">
+            <li><a class="dropdown-item" href="Artikel Sejarah.html#1S">Era Orde Baru</a></li>
+            <li><a class="dropdown-item" href="Artikel Sejarah.html#2S">Era Reformasi</a></li>
+            <li><a class="dropdown-item" href="Artikel Sejarah.html#3S">Era Sekarang</a></li>
+          </ul>
+                  <li class="nav-item dropdown">
+          <p style="font-size: 22px; display:flex; align-items: center;" class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown">
+            Sikap Masyarakat
+          </p>
+          <ul style="background-color: #2c2c2c !important;" class="dropdown-menu" class="dropdown-menu">
+            <li><a class="dropdown-item" href="./Artikel Agama.html#1A">Kesadaran Warga & Tanggung Jawab Sosial</a></li>
+            <li><a class="dropdown-item" href="./Artikel Agama.html#2A">Kewaspadaan terhadap Pengaruh Ideologi & Media</a></li>
+            <li><a class="dropdown-item" href="./Artikel Agama.html#3A">Penghormatan terhadap Hak & Kebebasan</a></li>
+          </ul>
+        </li>
+      </ul>
+
+<form class="d-flex ms-auto" role="search" onsubmit="return findInPage(event)">
+    <input id="searchInput" class="form-control me-2" type="smnearch" placeholder="Find in Page">
+    <button class="btn btn-outline-light" type="submit">Enter
+    </button>
+</form>
+
+<script>
+function clearHighlights() {
+    const marks = document.querySelectorAll("mark.find-highlight");
+    marks.forEach(m => {
+        const parent = m.parentNode;
+        parent.replaceChild(document.createTextNode(m.textContent), m);
+        parent.normalize();
+    });
+}
+
+function findInPage(e) {
+    e.preventDefault();
+
+    clearHighlights(); // Bersihkan highlight lama
+
+    let keyword = document.getElementById("searchInput").value.trim();
+    if (!keyword) return;
+
+    let body = document.body;
+
+    let regex = new RegExp(keyword, "gi");
+
+    let walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null, false);
+
+    let firstMatch = null;
+
+    while (walker.nextNode()) {
+        let node = walker.currentNode;
+        if (regex.test(node.nodeValue)) {
+
+            let span = document.createElement("span");
+            span.innerHTML = node.nodeValue.replace(regex, match => {
+                return `<mark class="find-highlight">${match}</mark>`;
+            });
+
+            node.parentNode.replaceChild(span, node);
+
+            if (!firstMatch) firstMatch = span.querySelector("mark");
+        }
+    }
+
+    if (firstMatch) {
+        firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+}
+</script>
+
+
+    </div>
+  </div>
+</nav>
+<body>
+    <style>
+.article-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 30px;
+}
+
+/* Kolom kiri (ikon share) */
+.share-column {
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.share-column img {
+    width: 40px;
+    cursor: pointer;
+}
+
+/* Kolom kanan (konten) */
+.content-column {
+    flex: 1;
+}
+
+.image-box img {
+    width: 68%;
+    height: auto;
+    display: block;
+}
+</style>
+
+
+<!-- LAYOUT BERITA -->
+<div class="article-container" style="display: flex; gap: 20px;">
+
+    <!-- Ikon Serviam -->
+    <div class="share-column" style="display: flex; flex-direction: column; gap: 10px;">
+        <img src="./Img/SERVIAM.png" alt="..." style="width: 60px;">
+    </div>
+
+    <!-- Container utama -->
+<div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
+
+    <!-- Konten dengan Card 3D -->
+    <div Id="1A" class="content-column" style="
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        padding: 30px;
+        max-width: 725px;
+        flex: 1;
+    ">
+        <h1 style="font-weight:700; font-size:40px; margin-bottom:10px; color:#ff0000; font-family: 'Fredoka One', sans-serif;">
+            Kesadaran Warga & Tanggung Jawab Sosial
+        </h1>
+
+        <p style="color:#333; font-size:15px; margin-bottom:25px;">
+            Oleh <b>Alicia</b> &nbsp;&nbsp;&nbsp;
+            Dipublikasikan pada <b>28 November 2025</b> &nbsp;&nbsp;&nbsp;
+            Kategori: <b>Artikel</b> &nbsp;&nbsp;&nbsp;
+        </p>
+
+        <!-- Artikel PKN 2 -->
+        <div class="image-box" style="margin-bottom: 15px;">
+            <img src="./Img/Warga Indonesia.jpeg" alt="gambar" style="width: 100%; display: block; border-radius: 15px;">
+        </div>
+
+        <p><strong>Gambar 3.1</strong> - <span style="font-weight: lighter;">Kesadaran warga negara indonesia akan pers. 𝘚𝘶𝘮𝘣𝘦𝘳 : 𝘳𝘢𝘥𝘢𝘳𝘭𝘢𝘮𝘣𝘢𝘳.𝘣𝘢𝘤𝘢𝘬𝘰𝘳𝘢𝘯.𝘤𝘰</span></p>
+
+        <div class="text-wrapper" style="padding-top: 20px;">
+            <p style="text-align: justify">Tanggung jawab sosial berarti setiap orang sadar bahwa tindakannya berpengaruh pada orang lain. Agama mengajarkan kita untuk hidup rukun dan tidak merugikan sesama.</p>
+            <p style="text-align: justify">Seperti yang kita semua ketahui, semua agama melarang penyebaran fitnah karena bisa merusak nama baik orang lain dan menciptakan permusuhan. Karena itu, sebelum menyebarkan informasi, warga harus memastikan kebenarannya.</p>
+            <p style="text-align: justify">Selain itu, kebebasan berbicara bukan berarti bebas menyakiti orang lain. Dalam agama, kita diajarkan untuk berbicara dengan kasih, sopan, dan saling menghormati. Jadi, berpendapat harus dilakukan tanpa menghina atau menyerang pihak lain.</p>
+            <p style="text-align: justify">Nilai agama juga mendorong kita untuk memberikan dampak positif bagi sesama. Dengan memilih media yang jujur dan berkualitas, kita ikut membantu menciptakan masyarakat yang damai dan penuh kebenaran.</p>
+            <p style="text-align: justify">Maka dari itu, kebebasan pers adalah hal penting dalam masyarakat. Namun, kebebasan ini akan berjalan dengan baik jika warga memiliki kesadaran dan tanggung jawab sosial. Nilai-nilai agama seperti kejujuran, tanggung jawab, kasih, dan menghargai sesama dapat menjadi pedoman untuk menggunakan informasi dengan benar. Jika masyarakat menjalankan nilai-nilai tersebut, maka lingkungan informasi akan menjadi lebih sehat dan bermanfaat bagi semua.</p>
+        </div>
+    </div>
+
+    <!-- Konten dengan Card 3D -->
+    <div Id="2A" class="content-column" style="
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        padding: 30px;
+        max-width: 725px;
+        flex: 1;
+    ">
+        <h1 style="font-weight:700; font-size:40px; margin-bottom:10px; color:#ff0000; font-family: 'Fredoka One', sans-serif;">
+            Kewaspadaan terhadap Pengaruh Ideologi dan Media
+        </h1>
+
+        <p style="color:#333; font-size:15px; margin-bottom:25px;">
+            Oleh <b>Alicia</b> &nbsp;&nbsp;&nbsp;
+            Dipublikasikan pada <b>28 November 2025</b> &nbsp;&nbsp;&nbsp;
+            Kategori: <b>Artikel</b> &nbsp;&nbsp;&nbsp;
+        </p>
+
+        <!-- Artikel PKN 1 -->
+        <div class="image-box" style="margin-bottom: 15px;">
+            <img src="./Img/2107bdd13cb21280b852373bb044ac67.jpeg" alt="gambar" style="width: 100%; display: block; border-radius: 15px;">
+        </div>
+        <p><strong>Gambar 3.2</strong> - <span style="font-weight: lighter;">Media massa dapat menjadi 'kuda troya' yang mempengaruhi pemikiran ideologi masyarakat. 𝘚𝘶𝘮𝘣𝘦𝘳 : 𝘋𝘪𝘴𝘸𝘢𝘺</span></p>
+
+        <div class="text-wrapper" style="padding-top: 20px;">
+            <p style="text-align: justify">Di zaman sekarang, media punya peran sangat besar dalam membentuk cara kita berpikir dan melihat dunia. Melalui internet, televisi, TikTok, YouTube, dan berita online, kita menerima ribuan informasi setiap hari. Informasi ini sebenarnya tidak netral, karena sering membawa ideologi atau cara pandang tertentu. Karena itu, penting bagi kita sebagai pelajar dan warga untuk memiliki kewaspadaan agar tidak mudah terpengaruh oleh hal-hal negatif.</p>
+            <p style="text-align: justify">Ideologi adalah sistem keyakinan atau cara berpikir yang memandu seseorang atau kelompok dalam melihat kehidupan. Ideologi bisa berupa nilai politik, sosial, budaya, atau keyakinan tertentu.</p>
+            <p style="text-align: justify">Sementara itu, media adalah sarana penyampai informasi. Media dapat membentuk opini publik karena apa yang kita lihat dan dengar bisa mempengaruhi sikap dan perilaku kita. Hal itu seperti, konten yang mempromosikan gaya hidup tertentu, berita yang dibungkus sesuai kepentingan, bahkan opini influencer yang sebenarnya membawa pandangan ideologi tertentu.</p>
+            <p style="text-align: justify"><b>Lantas mengapa kita harus waspada?</b> Ideologi yang tersebar melalui media bisa berdampak positif, tapi juga bisa menyesatkan. Beberapa media mungkin menyampaikan informasi yang tidak lengkap, tidak jujur, atau dibuat untuk mempengaruhi cara pikir masyarakat. Jika tidak waspada, kita bisa mudah percaya hoaks, terpengaruh ajaran sesat, punya kebencian, atau punya pandangan yang bias atau bahkan tidak adil.</p>
+            <p style="text-align: justify"><b>Kita harus bisa menjadi warga yang waspada terhadap pengaruh-pengaruh itu!</b> Hal ini dapat kita lakukan dengan bersikap kritis terhadap informasi, mengecek kebenaran informasi, memahami tujuan dari konten media, mengembangkan nilai pribadi yang kuat, dan menghindari media yang menebarkan kebencian.</p>
+            <p style="text-align: justify">Media dan ideologi sangat mempengaruhi cara kita berpikir, terutama di era digital. Karena itu, kewaspadaan sangat penting agar kita tidak terjebak dalam informasi yang salah. Dengan bersikap kritis, berhati-hati, dan tetap memegang nilai moral yang kuat, kita bisa menjadi warga yang cerdas dan bertanggung jawab dalam menghadapi arus informasi dari berbagai ideologi dan media.</p>
+        </div>
+    </div>
+        <!-- Konten dengan Card 3D -->
+    <div Id="3A" class="content-column" style="
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        padding: 30px;
+        max-width: 725px;
+        flex: 1;
+    ">
+        <h1 style="font-weight:700; font-size:40px; margin-bottom:10px; color:#ff0000; font-family: 'Fredoka One', sans-serif;">
+            Penghormatan terhadap Hak & Kewajiban
+        </h1>
+
+        <p style="color:#333; font-size:15px; margin-bottom:25px;">
+            Oleh <b>Alicia</b> &nbsp;&nbsp;&nbsp;
+            Dipublikasikan pada <b>28 November 2025</b> &nbsp;&nbsp;&nbsp;
+            Kategori: <b>Artikel</b> &nbsp;&nbsp;&nbsp;
+        </p>
+
+        <!-- Artikel PKN 1 -->
+        <div class="image-box" style="margin-bottom: 15px;">
+            <img src="./Img/Hak dan Kewajiban.webp" alt="gambar" style="width: 100%; display: block; border-radius: 15px;">
+        </div>
+        <p><strong>Gambar 3.3</strong> - <span style="font-weight: lighter;">Ilustrasi mengenai penghormatan hak dan kewajiban yang menjadi junjungan setiap orang. 𝘚𝘶𝘮𝘣𝘦𝘳 : 𝘈𝘩𝘭𝘪 𝘏𝘶𝘬𝘶𝘮 𝘐𝘯𝘥𝘰𝘯𝘦𝘴𝘪𝘢</span></p>
+
+        <div class="text-wrapper" style="padding-top: 20px;">
+            <p style="text-align: justify">Setiap manusia memiliki hak dan kebebasan yang harus dihargai. Hak ini mencakup kebebasan berpendapat, hak untuk hidup aman, hak untuk dihormati, serta hak untuk mendapatkan perlakuan yang adil. Dalam kehidupan sehari-hari, menghormati hak dan kebebasan orang lain sangat penting agar tercipta lingkungan yang damai, tertib, dan saling menghargai.</p>
+            <p style="text-align: justify">Hak dan kebebasan adalah sesuatu yang melekat pada setiap orang sejak lahir. Hak ini tidak boleh diambil oleh siapa pun. Contohnya ialah hak untuk menyampaikan pendapat, hak beragama, hak mendapatkan pendidikan, hak diperlakukan dengan adil, hak mendapatkan rasa aman. Kebebasan berarti seseorang boleh melakukan sesuatu selama tidak merugikan orang lain.</p>
+            <p style="text-align: justify"><b>Mengapa kita harus menghormati hak dan kebebasan?</b> Menghormati hak orang lain menunjukkan bahwa kita matang secara moral dan sosial. Tanpa sikap saling menghormati, masyarakat bisa jadi penuh konflik, pertengkaran, dan ketidakadilan. Penghormatan terhadap hak juga membantu menjaga persatuan dan menghindari diskriminasi.</p>
+            <p style="text-align: justify">Menghargai pendapat orang lain adalah hal penting, karena meskipun kita tidak setuju, kita tetap perlu mendengarkan dan menghormati sudut pandang mereka tanpa menyerang atau menghina. Kita juga tidak boleh mengganggu kebebasan orang lain; misalnya, kebebasan berbicara tidak bisa digunakan untuk menyebarkan kebencian, fitnah, atau merugikan pihak lain. Selain itu, menjaga sikap sopan dan bertanggung jawab menunjukkan bahwa kita menghargai sesama, karena kebebasan bukan berarti bebas melakukan apa pun tanpa memikirkan akibatnya. Kita juga perlu menghindari diskriminasi karena setiap orang berhak diperlakukan sama tanpa memandang agama, suku, gender, atau latar belakang. Di samping itu, kita wajib memenuhi kewajiban agar hak orang lain tidak terganggu, seperti tidak membuat keributan yang mengganggu ketenangan lingkungan serta mengikuti aturan sekolah agar hak siswa lain untuk belajar tetap terjaga.</p>
+            <p style="text-align: justify">Hampir semua agama mengajarkan untuk menghormati sesama manusia. Nilai seperti kasih, keadilan, dan penghargaan terhadap martabat manusia menjadi dasar utama penghormatan terhadap hak dan kebebasan. Menghormati orang lain juga berarti menjalankan ajaran moral dan menunjukkan kedewasaan iman.</p>
+            <p style="text-align: justify">Penghormatan terhadap hak dan kebebasan adalah hal penting dalam kehidupan bermasyarakat. Dengan saling menghormati, kita bisa menciptakan suasana yang aman, damai, dan adil. Sebagai pelajar, kita bisa mulai menerapkannya dalam kehidupan sehari-hari, seperti menghargai pendapat teman, bersikap sopan, dan tidak menyebarkan kebencian. Jika semua orang melakukan hal ini, maka lingkungan kita akan menjadi lebih baik bagi semua.</p>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+<!-- Video Fixed di Kiri, Vertikal Tengah dengan Border Rounded -->
+<div style="width: 400px; height: auto; position: fixed; top: 50%; right: 40px; transform: translateY(-50%);">
+    <video width="100%" controls style="border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <source src="./Img/Video PKWU.mp4" type="video/mp4">
+    </video>
+</div>
+<a href="#top" target="_self" 
+   style="position: fixed; bottom: 40px; right: 40px; 
+          background-color: #ff0000; color: white; 
+          text-decoration: none; padding: 12px 20px; 
+          border-radius: 10px; cursor: pointer; 
+          box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+          font-size: 16px; display: block; z-index: 1000;">
+    ↑ Back to Top
+</a>
+</div>
+
+</div>
+</div>
+<!--        FOOTER             -->
+<footer style="
+    height:180px;
+    margin-top:80px;
+    background: url('./Img/Nav\ Bar\ Background.png') center/cover no-repeat;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-family: 'Fredoka One', cursive;
+    text-align:center;
+">
+    <p style="font-size:20px; margin:0;">
+        © 2025 Merdeka Bersuara — Kelompok 4 X3 SMA Santa Theresia
+    </p>
+</footer>
+
+</body>
+</html>
